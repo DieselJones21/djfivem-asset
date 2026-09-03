@@ -96,7 +96,7 @@ function Nocturne.PlayScene(data)
     TaskPlayAnim(ped, scene.dict, scene.anim, 8.0, -8.0, -1, scene.flag, 0.0, false, false, false)
     SetEntityAnimSpeed(ped, scene.dict, scene.anim, scene.speed)
 
-    if scene.freeze then
+    if scene.freeze and scene.place ~= 'vehicle' then
         FreezeEntityPosition(ped, true)
     end
     if scene.invincible then
@@ -172,9 +172,14 @@ CreateThread(function()
                 hudThisFrame()
             end
             if scene.dict and scene.anim and not IsEntityPlayingAnim(ped, scene.dict, scene.anim, 3) then
-                TaskPlayAnim(ped, scene.dict, scene.anim, 8.0, -8.0, -1, scene.flag, 0.0, false, false, false)
-                SetEntityAnimSpeed(ped, scene.dict, scene.anim, scene.speed)
-                applyAttach()
+                if (scene.flag % 2) == 1 then
+                    TaskPlayAnim(ped, scene.dict, scene.anim, 8.0, -8.0, -1, scene.flag, 0.0, false, false, false)
+                    SetEntityAnimSpeed(ped, scene.dict, scene.anim, scene.speed)
+                    applyAttach()
+                else
+                    TriggerServerEvent('nocturne:stop')
+                    Nocturne.StopScene(true)
+                end
             end
             Wait(0)
         else
