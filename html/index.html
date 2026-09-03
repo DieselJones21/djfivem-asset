@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nocturne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" class="hidden" aria-hidden="true">
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <section id="adult" class="overlay hidden">
+      <div class="card adult-card">
+        <p class="eyebrow">Members’ lounge</p>
+        <h1>This menu is 18+</h1>
+        <p class="lede">Nocturne is adult erotic roleplay. Confirm you are of legal age in your country before continuing.</p>
+        <div class="row">
+          <button class="btn ghost" id="adult-no" type="button">Leave</button>
+          <button class="btn gold" id="adult-yes" type="button">I am 18+</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="gate" class="overlay hidden">
+      <div class="card gate-card">
+        <img class="mark" src="assets/mark.svg" alt="" />
+        <p class="eyebrow" id="gate-product">Nocturne Membership</p>
+        <h1>After dark is a paid room.</h1>
+        <p class="lede">Buy membership, take the Discord role, then sync. The menu unlocks automatically when your role lands.</p>
+        <div class="price-row">
+          <span class="price" id="gate-price">$12.99</span>
+          <span class="price-note">one-time · Discord synced</span>
+        </div>
+        <div class="row">
+          <a class="btn gold" id="gate-buy" href="#" target="_blank" rel="noreferrer">Buy membership</a>
+          <a class="btn ghost" id="gate-discord" href="#" target="_blank" rel="noreferrer">Join Discord</a>
+        </div>
+        <button class="btn text" id="gate-sync" type="button">I already paid — sync roles</button>
+        <p class="hint" id="gate-reason"></p>
+      </div>
+    </section>
+
+    <section id="request" class="overlay hidden">
+      <div class="card request-card">
+        <p class="eyebrow">Scene request</p>
+        <h2 id="request-title">Someone wants to play</h2>
+        <p class="lede" id="request-copy"></p>
+        <div class="row">
+          <button class="btn ghost" id="request-deny" type="button">Decline</button>
+          <button class="btn rose" id="request-accept" type="button">Accept</button>
+        </div>
+        <div class="timer"><span id="request-bar"></span></div>
+      </div>
+    </section>
+
+    <div id="shell" class="shell hidden">
+      <aside class="side">
+        <header class="brand">
+          <img src="assets/mark.svg" alt="" />
+          <div>
+            <strong id="brand-name">Nocturne</strong>
+            <span id="brand-tag">Private rooms</span>
+          </div>
+        </header>
+        <nav id="cats" class="cats"></nav>
+        <div class="side-foot">
+          <div class="chip" id="member-chip">
+            <span class="dot"></span>
+            Member synced
+          </div>
+          <button class="btn text" id="btn-resync" type="button">Refresh Discord</button>
+        </div>
+      </aside>
+
+      <section class="main">
+        <header class="top">
+          <div class="search">
+            <input id="search" type="search" placeholder="Search poses…" autocomplete="off" />
+          </div>
+          <label class="partner">
+            <span>Partner</span>
+            <select id="partner">
+              <option value="">Nearby players</option>
+            </select>
+          </label>
+          <button class="icon-btn" id="btn-close" type="button" title="Close">✕</button>
+        </header>
+
+        <div class="heading">
+          <h2 id="cat-title">All scenes</h2>
+          <p id="cat-hint">Solo or send a request</p>
+        </div>
+
+        <div id="grid" class="grid"></div>
+      </section>
+    </div>
+
+    <footer id="scenebar" class="scenebar hidden">
+      <div class="scene-meta">
+        <span class="live"></span>
+        <strong id="scene-label">In scene</strong>
+        <em id="scene-role"></em>
+      </div>
+      <label class="speed">
+        Speed
+        <input id="speed" type="range" min="0.4" max="2" step="0.05" value="1" />
+      </label>
+      <div class="nudge" id="nudge-pad">
+        <button data-nudge="y:-0.02" type="button">N</button>
+        <button data-nudge="x:-0.02" type="button">W</button>
+        <button data-nudge="x:0.02" type="button">E</button>
+        <button data-nudge="y:0.02" type="button">S</button>
+        <button data-nudge="z:0.02" type="button">↑</button>
+        <button data-nudge="z:-0.02" type="button">↓</button>
+      </div>
+      <button class="btn ghost" id="btn-copy" type="button">Copy offset</button>
+      <button class="btn rose" id="btn-stop" type="button">Stop</button>
+    </footer>
+
+    <div id="toasts" class="toasts"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
