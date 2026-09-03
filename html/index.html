@@ -82,12 +82,11 @@
           <div class="search">
             <input id="search" type="search" placeholder="Search poses…" autocomplete="off" />
           </div>
-          <label class="partner">
+          <div class="partner">
             <span>Partner</span>
-            <select id="partner">
-              <option value="">Nearby players</option>
-            </select>
-          </label>
+            <button class="partner-btn" id="partner-btn" type="button">Nearby players</button>
+            <div id="partner-list" class="partner-list hidden" role="listbox"></div>
+          </div>
           <button class="icon-btn" id="btn-close" type="button" title="Close">✕</button>
         </header>
 

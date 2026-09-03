@@ -162,7 +162,7 @@ html, body {
   align-items: center;
 }
 
-.search input, .partner select {
+.search input, .partner-btn {
   width: 100%;
   height: 42px;
   border-radius: 12px;
@@ -175,6 +175,7 @@ html, body {
 }
 
 .partner {
+  position: relative;
   display: grid;
   gap: 4px;
   font-size: 10px;
@@ -182,6 +183,46 @@ html, body {
   text-transform: uppercase;
   color: var(--muted);
 }
+
+.partner-btn {
+  text-align: left;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+}
+
+.partner-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 6;
+  background: #1a1013;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: auto;
+  max-height: 220px;
+  box-shadow: var(--shadow);
+}
+
+.partner-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  padding: 10px 12px;
+  cursor: pointer;
+  font: 400 13px var(--font);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.partner-item:hover, .partner-item.active { background: rgba(196, 92, 106, 0.2); }
+.partner-item small { color: var(--muted); }
 
 .icon-btn {
   height: 42px;

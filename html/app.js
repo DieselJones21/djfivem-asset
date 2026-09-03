@@ -7,7 +7,8 @@
   const scenebar = document.getElementById('scenebar');
   const grid = document.getElementById('grid');
   const catsEl = document.getElementById('cats');
-  const partnerEl = document.getElementById('partner');
+  const partnerBtn = document.getElementById('partner-btn');
+  const partnerList = document.getElementById('partner-list');
   const searchEl = document.getElementById('search');
   const toasts = document.getElementById('toasts');
 
@@ -204,17 +205,47 @@
     });
   }
 
+  function partnerLabel() {
+    if (!state.targetId) return 'Nearby players';
+    const p = state.nearby.find(function (n) { return String(n.id) === String(state.targetId); });
+    return p ? p.name : 'Nearby players';
+  }
+
   function renderNearby(players) {
     state.nearby = players || [];
-    const current = state.targetId;
-    partnerEl.innerHTML = '<option value="">Nearby players</option>';
-    state.nearby.forEach(function (p) {
-      const opt = document.createElement('option');
-      opt.value = String(p.id);
-      opt.textContent = p.name + '  ·  ' + p.distance + 'm' + (p.sameVehicle ? '  (same car)' : '');
-      partnerEl.appendChild(opt);
+    partnerBtn.textContent = partnerLabel();
+    partnerList.innerHTML = '';
+    const clear = document.createElement('button');
+    clear.type = 'button';
+    clear.className = 'partner-item' + (!state.targetId ? ' active' : '');
+    clear.innerHTML = '<span>No partner</span><small>solo</small>';
+    clear.addEventListener('click', function () {
+      state.targetId = '';
+      partnerBtn.textContent = 'Nearby players';
+      partnerList.classList.add('hidden');
+      renderNearby(state.nearby);
     });
-    if (current) partnerEl.value = current;
+    partnerList.appendChild(clear);
+    if (!state.nearby.length) {
+      const empty = document.createElement('div');
+      empty.className = 'partner-item';
+      empty.textContent = 'Nobody in range';
+      partnerList.appendChild(empty);
+      return;
+    }
+    state.nearby.forEach(function (p) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'partner-item' + (String(state.targetId) === String(p.id) ? ' active' : '');
+      btn.innerHTML = '<span>' + p.name + '</span><small>' + p.distance + 'm' + (p.sameVehicle ? ' · car' : '') + '</small>';
+      btn.addEventListener('click', function () {
+        state.targetId = String(p.id);
+        partnerBtn.textContent = p.name;
+        partnerList.classList.add('hidden');
+        renderNearby(state.nearby);
+      });
+      partnerList.appendChild(btn);
+    });
   }
 
   function layout() {
@@ -301,8 +332,15 @@
     state.query = e.target.value;
     renderGrid();
   });
-  partnerEl.addEventListener('change', function (e) {
-    state.targetId = e.target.value;
+  partnerBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    partnerList.classList.toggle('hidden');
+  });
+  document.addEventListener('click', function () {
+    partnerList.classList.add('hidden');
+  });
+  partnerList.addEventListener('click', function (e) {
+    e.stopPropagation();
   });
   document.getElementById('request-accept').addEventListener('click', function () {
     post('respond', { accepted: true });
